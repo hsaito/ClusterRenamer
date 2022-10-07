@@ -5,6 +5,8 @@ function Rename-ClusterPhoto {
         [string]$Location
     )
 
+    Write-Warning "ClusterRenamer is depracated. Please use VRSNS_PhotoRenamer which offers the same functionality and more!"
+
     if($Location -eq $null)
     {
         $Location = Get-Location
@@ -14,7 +16,7 @@ function Rename-ClusterPhoto {
 
     foreach($item in $items)
     {
-        $writeTime = $item.LastWriteTime.ToString("yyyyMMdd_HHmmss")
+        $writeTime = $item.CreationTime.ToString("yyyyMMdd_HHmmss")
         $newName =  ("{0}_{1}" -f $writeTime, $item.Name)
         if($PSCmdlet.ShouldProcess("$item -> $newName", "Rename File")){
             Move-Item -Path $item -Destination $newName
